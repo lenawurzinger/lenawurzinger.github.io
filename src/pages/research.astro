@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import HorizontalCard from "../components/HorizontalCard.astro";
+import { getCollection } from "astro:content";
+import createSlug from "../lib/createSlug"
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const last_posts = posts.slice(0, 3);
+---
+
+<BaseLayout sideBarActiveItemID="research">
+  <div class="pb-12 mt-5 ">
+    <div class="text-4xl font-bold">Papers</div>
+    <div class="text-lg py-6">
+      Here is a list of my papers and preprints in reverse chronological order.
+    </div>
+
+    <div class="space-y-10">
+      <div>
+        <div class="text-lg font-semibold">
+          [2] Sumset growth in progression-free sets
+        </div>
+        <div class="mt-1 text-base">
+          with
+          <a
+            href="https://www.math.tugraz.at/~elsholtz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-700 hover:underline hover:underline-offset-2"
+          >
+            C. Elsholtz
+          </a>
+          and
+          <a
+            href="https://www.renyi.hu/~ruzsa/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-700 hover:underline hover:underline-offset-2"
+          >
+            I. Z. Ruzsa
+          </a>
+        </div>
+        <div class="mt-1 text-sm opacity-80">
+          <em>Acta Arith.</em> 220 (2025), no. 3, 289–303
+        </div>
+        <div class="mt-2 flex gap-4">
+          <a
+            href="https://www.impan.pl/en/publishing-house/journals-and-series/acta-arithmetica/all/220/3/116127/sumset-growth-in-progression-free-sets"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-700 hover:underline"
+          >
+            Journal
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="text-lg font-semibold">
+          [1] Sumsets in the set of squares
+        </div>
+        <div class="mt-1 text-base">
+          with
+          <a
+            href="https://www.math.tugraz.at/~elsholtz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-700 hover:underline hover:underline-offset-2"
+          >
+            C. Elsholtz
+          </a>.
+        </div>
+        <div class="mt-1 text-sm opacity-80">
+          <em>Q. J. Math.</em> 75 (2024), no. 4, 1243–1254
+        </div>
+        <div class="mt-2 flex gap-4">
+          <a
+            href="/sumsets_squares.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-700 hover:underline"
+          >
+            PDF
+          </a>
+          <a
+            href="https://academic.oup.com/qjmath/article/75/4/1243/7749340"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-700 hover:underline"
+          >
+            Journal
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

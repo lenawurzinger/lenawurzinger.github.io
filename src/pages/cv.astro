@@ -3,90 +3,366 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import TimeLineElement from "../components/cv/TimeLine.astro";
 ---
 
-<BaseLayout title="Resume" sideBarActiveItemID="cv">
-  <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Profile</div>
-  </div>
-
-  <div class="mb-10 text-justify">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<BaseLayout title="CV" sideBarActiveItemID="cv">
+  <div class="mb-10">
+    <div class="text-4xl w-full font-bold">Lena Wurzinger</div>
   </div>
 
   <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Education</div>
+    <div class="text-3xl w-full font-bold"> </div>
   </div>
 
   <div class="time-line-container grid gap-4 mb-10">
     <TimeLineElement
-      title="Title Name"
-      subtitle="[start year] to [end year] at [Study Center Name], [City], [Country]"
-    />
+      title="PhD in Mathematics, ISTA (2023–present)"
+      subtitle="Research in analytic number theory, supervised by "
+    >
+      <a
+        href="https://tdbrowning.github.io/tdb/index.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-700 hover:underline hover:underline-offset-2"
+      >
+        Tim Browning
+      </a>
+    </TimeLineElement>
+
     <TimeLineElement
-      title="Title Name"
-      subtitle="[start year] to [end year] at [Study Center Name], [City], [Country]"
+      title="Mathematics MSc at TU Graz & University of Graz (2022–2023)"
+      subtitle="Research in additive combinatorics, supervised by "
+    >
+      <a
+        href="https://www.math.tugraz.at/~elsholtz/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-700 hover:underline hover:underline-offset-2"
+      >
+        Christian Elsholtz
+      </a>
+    </TimeLineElement>
+
+    <TimeLineElement
+      title="Mathematics BSc at TU Graz & University of Graz (2018–2022)"
     />
   </div>
 
   <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Experience</div>
+    <div class="text-2xl w-full font-bold">Publications</div>
   </div>
 
-  <div class="time-line-container mb-10">
-    <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-    </TimeLineElement>
-    <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-    </TimeLineElement>
-    <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-    </TimeLineElement>
+  <div class="mb-10 grid gap-6">
+    <div>
+      <div class="font-semibold">[2] Sumset growth in progression-free sets</div>
+      <div class="mt-1 text-sm">
+        with
+        <a
+          href="https://www.math.tugraz.at/~elsholtz/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          C. Elsholtz
+        </a>
+        and
+        <a
+          href="https://www.renyi.hu/~ruzsa/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          I. Z. Ruzsa
+        </a>
+      </div>
+      <div class="font-light text-sm">
+        <em>Acta Arith.</em> 220 (2025), no. 3, 289–303
+      </div>
+      <div class="mt-1 flex gap-4 text-sm">
+        <a
+          href="https://www.impan.pl/en/publishing-house/journals-and-series/acta-arithmetica/all/220/3/116127/sumset-growth-in-progression-free-sets"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          Journal
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="font-semibold">[1] Sumsets in the set of squares</div>
+      <div class="mt-1 text-sm">
+        with
+        <a
+          href="https://www.math.tugraz.at/~elsholtz/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          C. Elsholtz
+        </a>
+      </div>
+      <div class="font-light text-sm">
+        <em>Q. J. Math.</em> 75 (2024), no. 4, 1243–1254
+      </div>
+      <div class="mt-1 flex gap-4 text-sm">
+        <a
+          href="/sumsets_squares.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          PDF
+        </a>
+        <a
+          href="https://academic.oup.com/qjmath/article/75/4/1243/7749340"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          Journal
+        </a>
+      </div>
+    </div>
   </div>
 
   <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Certifications</div>
+    <div class="text-2xl w-full font-bold">Conference Talks</div>
   </div>
 
-  <ul class="list-disc mx-6 mb-10 grid gap-2">
-    <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
+  <ul class="list-disc mx-6 mb-10 grid gap-3">
+  <li>
+      April 2026, Cheltenham, 
+      <em>“WINGS 2026”</em>:
+      <em>Towards lattices of fixed determinant</em>.
     </li>
     <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
+      February 2026, Strobl am Wolfgangsee (bifeb),
+      <em>“ELAZ 2026”</em>:
+      <em>The arithmetic of cyclic covers in many variables </em>(flash talk). 
+    </li>
+    <li>
+      July 2025, Klosterneuburg (ISTA), 
+      <em>“Graz ISTA Number Theory Day”</em>:
+      <em>Towards lattices of fixed determinant</em>.
+    </li>
+    <li>
+      June 2025, Marseille (CIRM),
+      <em>“Nombres premiers et aléa arithmétique”</em>:
+      <em>Sumset growth in progression-free sets</em>.
+    </li>
+    <li>
+      September 2023, Graz (University of Graz), 
+      <em>“ÖMG Tagung 2023”</em>:
+      <em>Sumsets in the set of squares</em>.
     </li>
   </ul>
 
   <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Skills</div>
+  <div class="text-2xl w-full font-bold">Academic Service</div>
+</div>
+
+<div class="mb-10 grid gap-6">
+  <div>
+    <div class="font-semibold">
+      Organiser of
+      <a
+        href="https://sites.google.com/view/mixcolloquium/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-700 hover:underline hover:underline-offset-2"
+      >
+        Mathematics In eXchange (MIX) colloquium
+      </a>
+      <span class="font-light text-sm"> · since 2024</span>
+    </div>
+    <ul class="list-disc mx-6 mt-2 grid gap-2">
+      <li>
+        Monthly colloquium for PhD students at ISTA (with
+        <a
+          href="https://www.daniel-holmes.at/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          Daniel Holmes,
+        </a>
+        <a
+          href="https://sites.google.com/view/oleksii-kolupaiev/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          Oleksii Kolupaiev,
+        </a> and
+          Anna Zanoli
+        , with a biannual joint colloquium with the Vienna School of Mathematics.
+      </li>
+    </ul>
   </div>
 
-  <ul class="list-disc md:columns-5 columns-2 mx-6">
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
+  <div>
+    <div class="font-semibold">
+      Organiser of
+      <a
+        href="https://sites.google.com/view/gntd/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-700 hover:underline hover:underline-offset-2"
+      >
+        Graz ISTA Number Theory Days
+      </a>
+      <span class="font-light text-sm"> · since 2024</span>
+    </div>
+    <ul class="list-disc mx-6 mt-2 grid gap-2">
+      <li>
+        Biannual joint seminar of ISTA and TU Graz (with
+        <a
+          href="https://tdbrowning.github.io/tdb/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          Tim Browning,
+        </a>
+        <a
+          href="https://www.math.tugraz.at/~frei/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          Christopher Frei,
+        </a> and
+        <a
+          href="https://sites.google.com/view/nickrome"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          Nick Rome
+        </a>).
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="font-semibold">
+      Organiser of ISTern Math Track Session – Flash Talk Competition
+      <span class="font-light text-sm"> · since 2024</span>
+    </div>
+    <ul class="list-disc mx-6 mt-2 grid gap-2">
+      <li>
+        Annual event for mathematics summer interns at ISTA
+        (with the MIX team and ISTA grad school).
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="font-semibold">
+      Organiser of
+      <a
+        href="https://discreteanalysis.pages.ist.ac.at/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-700 hover:underline hover:underline-offset-2"
+      >
+        Discrete Analysis Days
+      </a>
+      <span class="font-light text-sm"> · since 2025</span>
+    </div>
+    <ul class="list-disc mx-6 mt-2 grid gap-2">
+      <li>
+        Seminar at the intersection of combinatorics and number theory
+        (with
+        <a
+          href="https://tdbrowning.github.io/tdb/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          Tim Browning
+        </a>
+        and
+        <a
+          href="https://mkwn.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >
+          Matt Kwan
+        </a>).
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="font-semibold">Referee</div>
+    <div class="font-light text-sm">
+      for <em>Acta Arith.</em> and <em>Proc. Amer. Math. Soc.</em>
+    </div>
+  </div>
+</div>
+
+  <div class="mb-5">
+    <div class="text-2xl w-full font-bold">Teaching Experience</div>
+  </div>
+
+  <div class="mb-10 grid gap-6">
+    <div>
+      <div class="font-semibold">Teaching assistance at ISTA</div>
+      <ul class="list-disc mx-6 mt-2 grid gap-2">
+        <li>
+          Some Applications of <em>p</em>-adic Integration to Geometry and
+          Arithmetics <span class="font-light text-sm"> · 2025</span>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="font-semibold">Teaching assistance at Erdős Center</div>
+      <ul class="list-disc mx-6 mt-2 grid gap-2">
+        <li>
+          Recitation at the Summer School: Additive Combinatorics
+          <span class="font-light text-sm"> · June 2024</span>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="font-semibold">
+        Teaching assistance at Graz University of Technology
+      </div>
+      <ul class="list-disc mx-6 mt-2 grid gap-2">
+        <li>
+          Introduction to University Mathematics
+          <span class="font-light text-sm"> · 2022</span>
+        </li>
+        <li>
+          Mathematics for Chemistry I
+          <span class="font-light text-sm"> · 2021</span>
+        </li>
+        <li>
+          Discrete Mathematics for Computer Science
+          <span class="font-light text-sm"> · 2021, 2022</span>
+        </li>
+        <li>
+          Numerical Computation and Linear Algebra for Computer Science
+          <span class="font-light text-sm"> · 2019, 2020, 2022</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mb-5">
+    <div class="text-2xl w-full font-bold">Languages</div>
+  </div>
+
+  <ul class="list-disc md:columns-2 columns-1 mx-6 mb-10">
+    <li>German (native)</li>
+    <li>English (C1)</li>
+    <li>French (B1)</li>
+    <li>Russian (A2)</li>
+    <li>Spanish (A2)</li>
+    <li>Latin (basic knowledge)</li>
   </ul>
 </BaseLayout>

@@ -1,0 +1,403 @@
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+  <div class="absolute inset-0 bg-[#151515]"></div>
+  <canvas id="sidebar-lattice" class="absolute inset-0 w-full h-full"></canvas>
+  <div class="absolute inset-0 bg-slate-950/15"></div>
+</div>
+
+<script is:inline data-astro-rerun>
+  (() => {
+    if (window.__sidebarLatticeCleanup) {
+      window.__sidebarLatticeCleanup();
+    }
+
+    const canvas = document.getElementById("sidebar-lattice");
+    if (!(canvas instanceof HTMLCanvasElement)) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let w = 0;
+    let h = 0;
+    let originX = 0;
+    let originY = 0;
+    let halfCols = 0;
+    let halfRows = 0;
+    let frameId = 0;
+    let resizeObserver = null;
+
+    const spacing = 34;
+    const overscan = 6;
+    const baseDotRadius = 1.35;
+    const glowRadius = 120;
+
+    const fadeInTime = 2.2;
+    const holdTime = 4.5;
+    const fadeOutTime = 2.2;
+    const segmentTime = fadeInTime + holdTime + fadeOutTime;
+
+    const mouse = {
+      x: -9999,
+      y: -9999,
+      inside: false
+    };
+
+    function rgba(color, alpha) {
+      return `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
+    }
+
+    function clamp01(x) {
+      return Math.max(0, Math.min(1, x));
+    }
+
+    function smootherstep(t) {
+      t = clamp01(t);
+      return t * t * t * (t * (t * 6 - 15) + 10);
+    }
+
+    function key(ix, iy) {
+      return `${ix},${iy}`;
+    }
+
+    function latticeToScreen(ix, iy) {
+      return {
+        x: originX + ix * spacing,
+        y: originY - iy * spacing
+      };
+    }
+
+    function visiblePoint(p, margin = 80) {
+      return (
+        p.x >= -margin &&
+        p.x <= w + margin &&
+        p.y >= -margin &&
+        p.y <= h + margin
+      );
+    }
+
+    function pointGlow(x, y) {
+      if (!mouse.inside) return 0;
+      const dx = x - mouse.x;
+      const dy = y - mouse.y;
+      const dist = Math.hypot(dx, dy);
+      return Math.max(0, 1 - dist / glowRadius);
+    }
+
+    function inIntegerBounds(ix, iy, margin = 2) {
+      return (
+        ix >= -halfCols - margin &&
+        ix <= halfCols + margin &&
+        iy >= -halfRows - margin &&
+        iy <= halfRows + margin
+      );
+    }
+
+    const detColors = {
+      5: [255, 210, 74],
+      6: [255, 166, 60],
+      7: [255, 112, 86],
+      8: [242, 96, 156],
+      9: [188, 130, 255],
+      10: [104, 158, 255],
+      11: [92, 220, 208],
+      12: [184, 240, 90]
+    };
+
+    const variantsByDet = {
+      5: [
+        [[2, 1], [-1, 2]],
+        [[3, 1], [1, 2]]
+      ],
+      6: [
+        [[2, 0], [1, 3]],
+        [[2, 2], [-1, 2]]
+      ],
+      7: [
+        [[2, 1], [-1, 3]],
+        [[3, 1], [-1, 2]]
+      ],
+      8: [
+        [[2, 2], [-1, 3]],
+        [[1, 3], [-2, 2]]
+      ],
+      9: [
+        [[3, 0], [1, 3]],
+        [[2, 1], [-1, 4]]
+      ],
+      10: [
+        [[3, 1], [-1, 3]],
+        [[1, 3], [-3, 1]]
+      ],
+      11: [
+        [[3, 1], [-2, 3]],
+        [[2, 1], [-1, 5]]
+      ],
+      12: [
+        [[3, 0], [1, 4]],
+        [[3, 1], [-3, 3]]
+      ]
+    };
+
+    const detStages = [5, 6, 7, 8, 9, 10, 11, 12, 11, 10, 9, 8, 7, 6, 5];
+
+    function makeLayer(det, basis, variantIndex) {
+      return {
+        det,
+        color: detColors[det],
+        basis,
+        variantIndex,
+        pointSet: new Set()
+      };
+    }
+
+    function buildSequence() {
+      const seq = [];
+      const peakIndex = detStages.indexOf(12);
+
+      for (let stageIndex = 0; stageIndex < detStages.length; stageIndex++) {
+        const det = detStages[stageIndex];
+        const variants = variantsByDet[det];
+        const ordered = stageIndex > peakIndex ? [...variants].reverse() : variants;
+
+        for (let v = 0; v < ordered.length; v++) {
+          seq.push(makeLayer(det, ordered[v], v));
+        }
+      }
+
+      return seq;
+    }
+
+    const layers = buildSequence();
+
+    function buildLayerPointSets() {
+      const range = halfCols + halfRows + overscan + 12;
+
+      for (const layer of layers) {
+        const set = new Set();
+        const [a, b] = layer.basis;
+        const ax = a[0], ay = a[1];
+        const bx = b[0], by = b[1];
+
+        for (let m = -range; m <= range; m++) {
+          for (let n = -range; n <= range; n++) {
+            const ix = m * ax + n * bx;
+            const iy = m * ay + n * by;
+
+            if (!inIntegerBounds(ix, iy, 2)) continue;
+            set.add(key(ix, iy));
+          }
+        }
+
+        layer.pointSet = set;
+      }
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+      w = rect.width;
+      h = rect.height;
+      originX = w * 0.5;
+      originY = h * 0.5;
+
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      canvas.style.width = w + "px";
+      canvas.style.height = h + "px";
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      halfCols = Math.ceil(w / (2 * spacing)) + overscan;
+      halfRows = Math.ceil(h / (2 * spacing)) + overscan;
+
+      buildLayerPointSets();
+    }
+
+    function activeAlpha(localTime) {
+      if (localTime < fadeInTime) {
+        return smootherstep(localTime / fadeInTime);
+      }
+
+      if (localTime < fadeInTime + holdTime) {
+        return 1;
+      }
+
+      const t = (localTime - fadeInTime - holdTime) / fadeOutTime;
+      return 1 - smootherstep(t);
+    }
+
+    function getHoveredCell(layer) {
+      if (!mouse.inside) return null;
+
+      const [a, b] = layer.basis;
+      const ax = a[0], ay = a[1];
+      const bx = b[0], by = b[1];
+      const det = ax * by - ay * bx;
+
+      if (Math.abs(det) < 1e-9) return null;
+
+      const px = (mouse.x - originX) / spacing;
+      const py = -(mouse.y - originY) / spacing;
+
+      const u = (px * by - py * bx) / det;
+      const v = (-px * ay + py * ax) / det;
+
+      const i = Math.floor(u);
+      const j = Math.floor(v);
+
+      const p00 = latticeToScreen(i * ax + j * bx, i * ay + j * by);
+      const p10 = latticeToScreen((i + 1) * ax + j * bx, (i + 1) * ay + j * by);
+      const p11 = latticeToScreen((i + 1) * ax + (j + 1) * bx, (i + 1) * ay + (j + 1) * by);
+      const p01 = latticeToScreen(i * ax + (j + 1) * bx, i * ay + (j + 1) * by);
+
+      return [p00, p10, p11, p01];
+    }
+
+    function drawHoveredCell(layer, alpha, time) {
+      if (!mouse.inside || alpha <= 0.001) return;
+
+      const pts = getHoveredCell(layer);
+      if (!pts) return;
+      if (!pts.some((p) => visiblePoint(p, 180))) return;
+
+      const pulse = 0.78 + 0.22 * Math.sin(time * 0.45 + layer.det * 0.4);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      ctx.lineTo(pts[1].x, pts[1].y);
+      ctx.lineTo(pts[2].x, pts[2].y);
+      ctx.lineTo(pts[3].x, pts[3].y);
+      ctx.closePath();
+
+      ctx.fillStyle = rgba(layer.color, alpha * (0.035 + 0.014 * pulse));
+      ctx.fill();
+
+      ctx.shadowBlur = 8 + 5 * pulse;
+      ctx.shadowColor = rgba(layer.color, alpha * 0.18);
+      ctx.strokeStyle = rgba(layer.color, alpha * (0.16 + 0.06 * pulse));
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawBackgroundAndPoints(layer, alpha, time) {
+      for (let iy = -halfRows; iy <= halfRows; iy++) {
+        for (let ix = -halfCols; ix <= halfCols; ix++) {
+          const p = latticeToScreen(ix, iy);
+          const g = pointGlow(p.x, p.y);
+          const isActive = layer.pointSet.has(key(ix, iy));
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, baseDotRadius, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255,255,255,0.18)";
+          ctx.fill();
+
+          if (isActive) {
+            const pulse = 0.82 + 0.18 * Math.sin(
+              time * 0.55 +
+              0.11 * ix -
+              0.09 * iy +
+              0.45 * layer.det
+            );
+
+            const hoverBoost = 0.9 * g;
+            const radius = baseDotRadius + 0.75 + 1.1 * alpha + 1.25 * hoverBoost;
+            const fillAlpha = 0.16 + 0.34 * alpha + 0.12 * pulse + 0.22 * hoverBoost;
+
+            ctx.save();
+            ctx.shadowBlur = 6 + 8 * alpha + 10 * hoverBoost;
+            ctx.shadowColor = rgba(layer.color, 0.2 + 0.24 * alpha + 0.2 * hoverBoost);
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+            ctx.fillStyle = rgba(layer.color, fillAlpha);
+            ctx.fill();
+            ctx.restore();
+          } else if (g > 0.001) {
+            ctx.save();
+            ctx.shadowBlur = 7 + 18 * g;
+            ctx.shadowColor = `rgba(255,255,255,${0.28 * g})`;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, baseDotRadius + 0.65 + 1.25 * g, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${0.09 + 0.5 * g})`;
+            ctx.fill();
+            ctx.restore();
+          }
+        }
+      }
+
+      const o = latticeToScreen(0, 0);
+      ctx.beginPath();
+      ctx.arc(o.x, o.y, 2.4, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.62)";
+      ctx.fill();
+    }
+
+    function draw(timeMs) {
+      const time = timeMs * 0.001;
+      ctx.clearRect(0, 0, w, h);
+
+      const cycleDuration = layers.length * segmentTime;
+      const cycleTime = ((time % cycleDuration) + cycleDuration) % cycleDuration;
+
+      const segmentIndex = Math.floor(cycleTime / segmentTime);
+      const localTime = cycleTime - segmentIndex * segmentTime;
+
+      const layer = layers[segmentIndex];
+      const alpha = activeAlpha(localTime);
+
+      drawBackgroundAndPoints(layer, alpha, time);
+      drawHoveredCell(layer, alpha, time);
+
+      frameId = requestAnimationFrame(draw);
+    }
+
+    function updateMouse(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+        mouse.x = x;
+        mouse.y = y;
+        mouse.inside = true;
+      } else {
+        mouse.x = -9999;
+        mouse.y = -9999;
+        mouse.inside = false;
+      }
+    }
+
+    function handleMouseMove(e) {
+      updateMouse(e);
+    }
+
+    function handleMouseLeave() {
+      mouse.x = -9999;
+      mouse.y = -9999;
+      mouse.inside = false;
+    }
+
+    resizeObserver = new ResizeObserver(() => {
+      resize();
+    });
+    resizeObserver.observe(canvas);
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseleave", handleMouseLeave);
+
+    resize();
+    frameId = requestAnimationFrame(draw);
+
+    window.__sidebarLatticeCleanup = () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  })();
+</script>
