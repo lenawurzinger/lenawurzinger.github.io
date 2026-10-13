@@ -10,7 +10,8 @@ const { sideBarActiveItemID } = Astro.props;
 <div class="drawer-side z-40">
   <label for="my-drawer" class="drawer-overlay"></label>
 
-  <aside class="relative px-2 pt-2 h-auto min-h-full w-[22rem] overflow-hidden bg-slate-950 text-white flex flex-col">
+  
+<aside class="relative px-2 pt-2 h-auto min-h-full w-[min(22rem,100vw)] 2xl:w-[clamp(22rem,21vw,27rem)] overflow-hidden bg-slate-950 text-white flex flex-col">
     <SidebarLattice />
 
     <div class="relative z-10 flex flex-col min-h-full">
