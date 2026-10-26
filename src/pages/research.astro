@@ -1,76 +1,62 @@
+
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-import HorizontalCard from "../components/HorizontalCard.astro";
-import { getCollection } from "astro:content";
-import createSlug from "../lib/createSlug"
-
-const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-const last_posts = posts.slice(0, 3);
 ---
 
 <BaseLayout sideBarActiveItemID="research">
-  <div class="pb-6 mt-5 ">
+  <div class="mt-5">
     <div class="text-4xl font-bold">Publications</div>
-    <div class="text-lg py-6">
-      Here is a list of my papers and preprints in reverse chronological order. My Erdős number is 
-<a
-            href="https://mathscinet.ams.org/mathscinet/freetools/collab-dist?source=1647442&target=189017"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-700 hover:underline hover:underline-offset-2"
-          >
-            2</a>.
+
+    <div class="mt-6 text-lg">
+      Here is a list of my papers and preprints in reverse chronological order. My Erdős number is
+      <a
+        href="https://mathscinet.ams.org/mathscinet/freetools/collab-dist?source=1647442&target=189017"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-700 hover:underline hover:underline-offset-2"
+      >2</a>.
     </div>
-  <div class="text-lg -mt-4 mb-1">
+
+    <div class="mt-2 text-lg">
       <a
         id="cy-effective-orcid-url"
-        class="inline-flex items-center gap-2 text-blue-700 hover:underline hover:underline-offset-2"
         href="https://orcid.org/0009-0004-5360-0074"
         target="orcid.widget"
         rel="me noopener noreferrer"
+        class="inline-flex items-center gap-2 text-blue-700 hover:underline hover:underline-offset-2"
       >
         <span>ORCID iD: 0009-0004-5360-0074</span>
         <img
-            src="/ORCID-iD_icon_vector.svg"
-            class="w-4 h-4"
-            alt="ORCID iD icon"
+          src="/ORCID-iD_icon_vector.svg"
+          class="w-4 h-4"
+          alt="ORCID iD icon"
         />
       </a>
     </div>
   </div>
 
-    <div class="space-y-5">
-
-
- <div>
-      <div class="text-lg font-semibold">[5] Integer symplectic matrices in expanding boxes</div>
-      <div class="mt-1 text-base">
-
-<div class="mt-1 text-sm opacity-80">
-          <em>arXiv:2610.29794</em>
-        </div>
-
-<div class="mt-2 flex gap-4">
-  <a
-    href="https://arxiv.org/abs/2610.29794"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="text-blue-700 hover:underline"
-  >
-    arXiv
-  </a>
-</div>
-        
+  <div class="mt-4 space-y-5">
+    <div>
+      <div class="text-lg font-semibold">
+        [5] Integer symplectic matrices in expanding boxes
       </div>
-  </div>
-</div>
+      <div class="mt-1 text-sm opacity-80">
+        <em>arXiv:2610.29794</em>
+      </div>
+      <div class="mt-2 flex gap-4">
+        <a
+          href="https://arxiv.org/abs/2610.29794"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline"
+        >arXiv</a>
+      </div>
+    </div>
 
-
-
- <div>
-      <div class="text-lg font-semibold">[4] Improved bounds in Birch's theorem for forms in many variables</div>
+    <div>
+      <div class="text-lg font-semibold">
+        [4] Improved bounds in Birch's theorem for forms in many variables
+      </div>
       <div class="mt-1 text-base">
         with
         <a
@@ -78,30 +64,25 @@ const last_posts = posts.slice(0, 3);
           target="_blank"
           rel="noopener noreferrer"
           class="text-blue-700 hover:underline hover:underline-offset-2"
-        >
-          Y. Diao</a>
+        >Y. Diao</a>
       </div>
-
-<div class="mt-1 text-sm opacity-80">
-          <em>arXiv:2609.00757</em>
-        </div>
-
-<div class="mt-2 flex gap-4">
-  <a
-    href="https://arxiv.org/abs/2609.00757"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="text-blue-700 hover:underline"
-  >
-    arXiv
-  </a>
-</div>
-        
+      <div class="mt-1 text-sm opacity-80">
+        <em>arXiv:2609.00757</em>
       </div>
-
+      <div class="mt-2 flex gap-4">
+        <a
+          href="https://arxiv.org/abs/2609.00757"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline"
+        >arXiv</a>
+      </div>
+    </div>
 
     <div>
-      <div class="text-lg font-semibold">[3] The divisor function for matrices</div>
+      <div class="text-lg font-semibold">
+        [3] The divisor function for matrices
+      </div>
       <div class="mt-1 text-base">
         with
         <a
@@ -109,142 +90,116 @@ const last_posts = posts.slice(0, 3);
           target="_blank"
           rel="noopener noreferrer"
           class="text-blue-700 hover:underline hover:underline-offset-2"
-        >
-          T.D. Browning</a>,
-<a
+        >T.D. Browning</a>,
+        <a
           href="https://npkalinin.github.io/"
           target="_blank"
           rel="noopener noreferrer"
           class="text-blue-700 hover:underline hover:underline-offset-2"
-        >
-          N.P. Kalinin</a>,
-<a
+        >N.P. Kalinin</a>,
+        <a
           href="https://web.maths.unsw.edu.au/~alinaostafe/"
           target="_blank"
           rel="noopener noreferrer"
           class="text-blue-700 hover:underline hover:underline-offset-2"
-        >
-          A. Ostafe</a>
+        >A. Ostafe</a>
         and
         <a
           href="https://sites.google.com/site/damarishomepage/"
           target="_blank"
           rel="noopener noreferrer"
           class="text-blue-700 hover:underline hover:underline-offset-2"
-        >
-          D. Schindler
-        </a>
+        >D. Schindler</a>
       </div>
-
-<div class="mt-1 text-sm opacity-80">
-          <em>arXiv:2608.25078</em>
-        </div>
-
-<div class="mt-2 flex gap-4">
-  <a
-    href="https://arxiv.org/abs/2608.25078"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="text-blue-700 hover:underline"
-  >
-    arXiv
-  </a>
-<a
-    href="https://www.birs.ca/events/2026/5-day-workshops/26w5546/videos/watch/202609081604-Wurzinger.html"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="text-blue-700 hover:underline"
-  >
-    recorded talk (BIRS, Banff)
-  </a>
-</div>
-        
+      <div class="mt-1 text-sm opacity-80">
+        <em>arXiv:2608.25078</em>
       </div>
-  
-      <div>
-        <div class="text-lg font-semibold">
-          [2] Sumset growth in progression-free sets
-        </div>
-        <div class="mt-1 text-base">
-          with
-          <a
-            href="https://www.math.tugraz.at/~elsholtz/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-700 hover:underline hover:underline-offset-2"
-          >
-            C. Elsholtz
-          </a>
-          and
-          <a
-            href="https://www.renyi.hu/~ruzsa/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-700 hover:underline hover:underline-offset-2"
-          >
-            I. Z. Ruzsa
-          </a>
-        </div>
-        <div class="mt-1 text-sm opacity-80">
-          <em>Acta Arith.</em> 220 (2025), no. 3, 289–303
-        </div>
-        <div class="mt-2 flex gap-4">
-  <a
-            href="/sumset_growth_erw.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-700 hover:underline"
-          >
-            PDF
-          </a>
-          <a
-            href="https://www.impan.pl/en/publishing-house/journals-and-series/acta-arithmetica/all/220/3/116127/sumset-growth-in-progression-free-sets"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-700 hover:underline"
-          >
-            Journal
-          </a>
-        </div>
+      <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+        <a
+          href="https://arxiv.org/abs/2608.25078"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline"
+        >arXiv</a>
+        <a
+          href="https://www.birs.ca/events/2026/5-day-workshops/26w5546/videos/watch/202609081604-Wurzinger.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline"
+        >recorded talk (BIRS, Banff)</a>
       </div>
+    </div>
 
-      <div>
-        <div class="text-lg font-semibold">
-          [1] Sumsets in the set of squares
-        </div>
-        <div class="mt-1 text-base">
-          with
-          <a
-            href="https://www.math.tugraz.at/~elsholtz/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-700 hover:underline hover:underline-offset-2"
-          >
-            C. Elsholtz
-          </a>
-        </div>
-        <div class="mt-1 text-sm opacity-80">
-          <em>Q. J. Math.</em> 75 (2024), no. 4, 1243–1254
-        </div>
-        <div class="mt-2 flex gap-4">
-          <a
-            href="/sumsets_squares.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-700 hover:underline"
-          >
-            PDF
-          </a>
-          <a
-            href="https://academic.oup.com/qjmath/article/75/4/1243/7749340"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-700 hover:underline"
-          >
-            Journal
-          </a>
-        </div>
+    <div>
+      <div class="text-lg font-semibold">
+        [2] Sumset growth in progression-free sets
       </div>
-   
+      <div class="mt-1 text-base">
+        with
+        <a
+          href="https://www.math.tugraz.at/~elsholtz/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >C. Elsholtz</a>
+        and
+        <a
+          href="https://www.renyi.hu/~ruzsa/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >I. Z. Ruzsa</a>
+      </div>
+      <div class="mt-1 text-sm opacity-80">
+        <em>Acta Arith.</em> 220 (2025), no. 3, 289–303
+      </div>
+      <div class="mt-2 flex gap-4">
+        <a
+          href="/sumset_growth_erw.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline"
+        >PDF</a>
+        <a
+          href="https://www.impan.pl/en/publishing-house/journals-and-series/acta-arithmetica/all/220/3/116127/sumset-growth-in-progression-free-sets"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline"
+        >Journal</a>
+      </div>
+    </div>
 
+    <div>
+      <div class="text-lg font-semibold">
+        [1] Sumsets in the set of squares
+      </div>
+      <div class="mt-1 text-base">
+        with
+        <a
+          href="https://www.math.tugraz.at/~elsholtz/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline hover:underline-offset-2"
+        >C. Elsholtz</a>
+      </div>
+      <div class="mt-1 text-sm opacity-80">
+        <em>Q. J. Math.</em> 75 (2024), no. 4, 1243–1254
+      </div>
+      <div class="mt-2 flex gap-4">
+        <a
+          href="/sumsets_squares.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline"
+        >PDF</a>
+        <a
+          href="https://academic.oup.com/qjmath/article/75/4/1243/7749340"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline"
+        >Journal</a>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
+  
